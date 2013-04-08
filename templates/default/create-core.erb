@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd <%= @solr_path %>/cores
+
+if [ $1 ];then
+  CORE="$1"
+else
+  echo "You need to name a core."
+  exit
+fi
+
+echo "CORE: $CORE"
+
+if [ -d "<%= @solr_path %>/cores/$CORE" ]; then
+  echo "The core '$CORE' already exists."
+  exit
+else
+  curl -s -L <%= @solr_core %> -o $CORE.zip
+  unzip $CORE.zip
+  mv <%= @folder_name %> $CORE
+  rm $CORE.zip
+  chown -R <%= @jetty_user %>.<%= @jetty_user %> <%= @solr_path %>/cores
+  CREATE_CURL="http://127.0.0.1:<%= @jetty_port %>/solr/admin/cores?action=CREATE&name=$CORE&instanceDir=/opt/solr/cores/$CORE"
+  curl $CREATE_CURL
+  echo "Now edit conf/regex-urlfilter.txt and conf/urls/seed.txt"
+fi

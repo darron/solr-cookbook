@@ -1,0 +1,22 @@
+#!/bin/bash
+
+CONFIG="<%= @solr_path %>/solr.xml"
+
+cd <%= @solr_path %>
+
+
+echo '<?xml version="1.0" encoding="UTF-8" ?>' > $CONFIG
+echo "<!-- ############### DO NOT EDIT THIS MANUALLY - RUN <%= @solr_path %>/rebuild.sh ############### -->" >> $CONFIG
+echo '<solr persistent="true">' >> $CONFIG
+echo '<cores defaultCoreName="core1" adminPath="/admin/cores" zkClientTimeout="${zkClientTimeout:15000}" hostPort="${jetty.port:}" hostContext="solr">' >> $CONFIG
+
+cd <%= @solr_path %>/cores
+
+for core in $( ls ); do
+  echo "<core schema=\"schema.xml\" loadOnStartup=\"true\" instanceDir=\"/opt/solr/cores/$core/\" transient=\"false\" name=\"$core\" config=\"solrconfig.xml\"/>" >> $CONFIG
+done
+
+echo "</cores>" >> $CONFIG
+echo "</solr>" >> $CONFIG
+
+chown <%= @jetty_user %>.<%= @jetty_user %> $CONFIG

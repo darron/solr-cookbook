@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cd <%= @solr_path %>/cores
+
+if [ $1 ];then
+  CORE="$1"
+else
+  echo "You need to name a core."
+  exit
+fi
+
+echo "CORE: $CORE"
+
+if [ $CORE = "core1" ]; then
+  echo "You cannot remove core1 - just leave it alone."
+  exit
+fi
+
+if [ -d "<%= @solr_path %>/cores/$CORE" ]; then
+  UNLOAD_CURL="http://127.0.0.1:<%= @jetty_port %>/solr/admin/cores?action=UNLOAD&name=$CORE"
+  curl $UNLOAD_CURL
+  rm -rf <%= @solr_path %>/cores/$CORE
+  <%= @solr_path %>/rebuild.sh
+  service jetty restart
+else
+  echo "There is no core by that name"
+  exit
+fi
