@@ -1,13 +1,3 @@
-# solr cookbook
+DEPRECATED
 
-# Requirements
-
-# Usage
-
-# Attributes
-
-# Recipes
-
-# Author
-
-Author:: Darron Froese (<darron@froese.org>)
+Use https://github.com/darron/search_engine_solr-cookbook
