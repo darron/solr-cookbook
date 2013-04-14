@@ -1,3 +1,8 @@
+#
+# Cookbook Name:: solr
+# Recipe:: secure
+#
+
 # Setup firewall rules as required.
 solr_access_ips = []
 

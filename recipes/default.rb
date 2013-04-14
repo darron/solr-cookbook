@@ -2,10 +2,6 @@
 # Cookbook Name:: solr
 # Recipe:: default
 #
-# Copyright (C) 2013 Darron Froese
-# 
-# All rights reserved - Do Not Redistribute
-#
 
 # Install Jetty and Java.
 include_recipe "jetty::default"
