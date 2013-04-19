@@ -30,7 +30,7 @@ describe 'solr::default' do
   end
 
   it "installs the solr war file" do
-    file("#{node[:jetty][:path]}/webapps/solr.war").must_exist.with(:owner, "root")
+    file("#{node[:jetty][:path]}/webapps/solr.war").must_exist.with(:owner, node[:jetty][:user])
   end
   
   it "installs the solr.xml file" do
