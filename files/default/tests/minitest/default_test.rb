@@ -26,7 +26,7 @@ describe 'solr::default' do
   end
 
   it "creates the first core " do
-    assert_directory "#{node[:solr][:path]}/cores/core1", node[:jetty][:user], 'root', 0755
+    assert_directory "#{node[:solr][:path]}/cores/core1", node[:jetty][:user], node[:jetty][:user], 0755
   end
 
   it "installs the solr war file" do
