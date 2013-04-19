@@ -30,7 +30,7 @@ describe 'solr::default' do
   end
 
   it "installs the solr war file" do
-    assert_file "#{node[:jetty][:path]}/webapps/solr.war", 'root', 'root', 0755
+    assert_file "#{node[:jetty][:path]}/webapps/solr.war", node[:jetty][:user], node[:jetty][:user], 0755
   end
   
   it "installs the solr.xml file" do
