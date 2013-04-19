@@ -57,9 +57,17 @@ bash "install solr" do
     cp -R /usr/local/solr/example/solr/* #{node[:solr][:path]}
     cp -R /usr/local/solr/dist #{node[:solr][:path]}
     cp -R /usr/local/solr/contrib #{node[:solr][:path]}
-    chown -R #{node[:jetty][:user]}.#{node[:jetty][:user]} #{node[:solr][:path]}
+    chown -R #{node[:jetty][:user]}.#{node[:jetty][:user]} #{node[:jetty][:path]}/webapps/solr.war
   EOH
   not_if { FileTest.exists?("#{node[:jetty][:path]}/webapps/solr.war") }
+end
+
+bash "chown solr" do
+  user "root"
+  cwd "/tmp"
+  code <<-EOH
+    chown -R #{node[:jetty][:user]}.#{node[:jetty][:user]} #{node[:solr][:path]}
+  EOH
 end
 
 # Only install new solr.xml if it's the default install.
