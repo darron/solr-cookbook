@@ -124,4 +124,6 @@ template "#{node[:solr][:path]}/README.txt" do
 end
 
 # Firewall by ip address
-include_recipe "solr::secure"
+if node[:solr][:firewall]
+  include_recipe "solr::secure"
+end
